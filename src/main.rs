@@ -1,3 +1,7 @@
+extern crate statust;
+
 fn main() {
-    println!("Hello world!");
+    //statust::statust::hello_world();
+    let s = "Hello, world!";
+    println!("{:?}", s);
 }
