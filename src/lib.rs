@@ -62,13 +62,13 @@ impl DataFrame {
         for (i, line) in reader.lines().into_iter().enumerate() {
             if i == 0 {
                 line.unwrap()
-                    .split(",")
+                    .split(',')
                     .map(|s| s.trim().to_lowercase())
                     .collect_into(&mut header);
             } else {
                 let line = line.unwrap();
                 let mut row = Vec::new();
-                for s in line.split(",") {
+                for s in line.split(',') {
                     row.push(predict_type(s));
                 }
                 data.push(row);

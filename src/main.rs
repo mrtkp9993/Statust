@@ -1,6 +1,6 @@
 extern crate statust;
 
-use std::env;
+
 
 fn main() {
     // let s = "Hello, world!";
