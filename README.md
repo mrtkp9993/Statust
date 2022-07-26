@@ -9,9 +9,9 @@ Statistical methods in Rust.
 Following features are considered as minimal requirements and planned for first releases:
 
 - [x] Read data from flat files (txt, csv etc.),
+- [ ] Descriptive statistics,
 - [ ] Generate samples from different statistical distributions,
 - [ ] Normality tests,
-- [ ] Descriptive statistics,
 - [ ] Correlations,
 - [ ] t-tests, basic regression models like ordinary least squares (OLS),
 - [ ] basic optimization methods,

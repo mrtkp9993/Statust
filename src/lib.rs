@@ -1,5 +1,3 @@
-#![feature(iter_collect_into)]
-
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::fmt;
@@ -61,10 +59,11 @@ impl DataFrame {
 
         for (i, line) in reader.lines().into_iter().enumerate() {
             if i == 0 {
-                line.unwrap()
+                header = line
+                    .unwrap()
                     .split(',')
                     .map(|s| s.trim().to_lowercase().replace('\"', ""))
-                    .collect_into(&mut header);
+                    .collect();
             } else {
                 let line = line.unwrap();
                 let mut row = Vec::new();
