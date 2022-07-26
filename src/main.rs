@@ -12,4 +12,6 @@ fn main() {
 
     // let df = statust::DataFrame::read(fname).unwrap();
     // df.print();
+    // let res = df.describe();
+    // println!("{:#?}", res);
 }
