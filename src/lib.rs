@@ -43,7 +43,7 @@ pub fn predict_type(s: &str) -> DataType {
     } else if FLOAT_RE.is_match(s) {
         DataType::Float(s.parse::<f32>().unwrap())
     } else {
-        DataType::String(s.to_string())
+        DataType::String(s.replace('\"', ""))
     }
 }
 
@@ -63,7 +63,7 @@ impl DataFrame {
             if i == 0 {
                 line.unwrap()
                     .split(',')
-                    .map(|s| s.trim().to_lowercase())
+                    .map(|s| s.trim().to_lowercase().replace('\"', ""))
                     .collect_into(&mut header);
             } else {
                 let line = line.unwrap();
@@ -79,9 +79,68 @@ impl DataFrame {
     }
 
     pub fn print(&self) {
-        println!("{:?}", self.header);
+        println!(
+            "{0: <10} | {1: <10} | {2: <10} | {3: <10} | {4: <10}",
+            &self.header[0]
+                .chars()
+                .into_iter()
+                .take(8)
+                .collect::<String>(),
+            &self.header[1]
+                .chars()
+                .into_iter()
+                .take(8)
+                .collect::<String>(),
+            &self.header[2]
+                .chars()
+                .into_iter()
+                .take(8)
+                .collect::<String>(),
+            &self.header[3]
+                .chars()
+                .into_iter()
+                .take(8)
+                .collect::<String>(),
+            &self.header[self.header.len() - 1]
+                .chars()
+                .into_iter()
+                .take(8)
+                .collect::<String>()
+        );
         for row in self.data.iter().take(5) {
-            println!("{:?}", row);
+            println!(
+                "{0: <10} | {1: <10} | {2: <10} | {3: <10} | {4: <10}",
+                &row[0]
+                    .to_string()
+                    .chars()
+                    .into_iter()
+                    .take(8)
+                    .collect::<String>(),
+                &row[1]
+                    .to_string()
+                    .chars()
+                    .into_iter()
+                    .take(8)
+                    .collect::<String>(),
+                &row[2]
+                    .to_string()
+                    .chars()
+                    .into_iter()
+                    .take(8)
+                    .collect::<String>(),
+                &row[3]
+                    .to_string()
+                    .chars()
+                    .into_iter()
+                    .take(8)
+                    .collect::<String>(),
+                &row[row.len() - 1]
+                    .to_string()
+                    .chars()
+                    .into_iter()
+                    .take(8)
+                    .collect::<String>()
+            );
         }
     }
 }
