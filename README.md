@@ -3,6 +3,7 @@
 Statistical methods in Rust.
 
 [![Build](https://github.com/mrtkp9993/statust/actions/workflows/rust.yml/badge.svg)](https://github.com/mrtkp9993/statust/actions/workflows/rust.yml)
+[![codecov](https://codecov.io/gh/mrtkp9993/statust/branch/main/graph/badge.svg?token=OA54X7SJIA)](https://codecov.io/gh/mrtkp9993/statust)
 
 ## Planned features
 
