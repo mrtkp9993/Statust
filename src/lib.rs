@@ -76,16 +76,20 @@ pub struct NumericDescribeResult {
 
 impl Display for NumericDescribeResult {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        writeln!(
+            f,
+            "==============================================================="
+        )
+        .ok();
         write!(
             f,
             "{}:\n\
-            \tType: {}\n\
             \tNull Count: {}\n\
             \tMin: {}\n\
             \tMax: {}\n\
             \tMean: {}\n\
             \tStd: {}",
-            self.name, self.dtype, self.null_count, self.min, self.max, self.mean, self.std
+            self.name, self.null_count, self.min, self.max, self.mean, self.std
         )
     }
 }
@@ -115,17 +119,20 @@ pub struct CategoricalDescribeResult {
 
 impl Display for CategoricalDescribeResult {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        writeln!(
+            f,
+            "==============================================================="
+        )
+        .ok();
         write!(
             f,
             "{}:\n\
-            \tType: {}\n\
             \tNull Count: {}\n\
             \tUnique Count: {}\n\
             \tUnique Values: {:?}\n\
             \tMost Freq Value: {}\n\
             \tMost Freq Count: {}",
             self.name,
-            self.dtype,
             self.null_count,
             self.unique_count,
             self.unique_values,
@@ -146,14 +153,18 @@ pub struct BooleanDescribeResult {
 
 impl Display for BooleanDescribeResult {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        writeln!(
+            f,
+            "==============================================================="
+        )
+        .ok();
         write!(
             f,
             "{}:\n\
-            \tType: {}\n\
             \tNull Count: {}\n\
             \tTrue Count: {}\n\
             \tFalse Count: {}",
-            self.name, self.dtype, self.null_count, self.true_count, self.false_count
+            self.name, self.null_count, self.true_count, self.false_count
         )
     }
 }
@@ -279,7 +290,7 @@ impl DataFrame {
                                 if s.is_empty() {
                                     categorical_result.null_count += 1;
                                 } else {
-                                    if !categorical_result.unique_values.contains(&s) {
+                                    if !categorical_result.unique_values.contains(s) {
                                         categorical_result.unique_values.push(s.clone());
                                         categorical_result.unique_count += 1;
                                     }
@@ -301,6 +312,19 @@ impl DataFrame {
         result
     }
 
+    pub fn print_describe(&self) {
+        let result = self.describe();
+        for (_, describe_result) in result {
+            match describe_result {
+                DescribeResult::Boolean(bool_result) => println!("{}", bool_result),
+                DescribeResult::Numeric(numeric_result) => println!("{}", numeric_result),
+                DescribeResult::Categorical(categorical_result) => {
+                    println!("{}", categorical_result)
+                }
+            }
+        }
+    }
+
     pub fn get_row(&self, row: usize) -> Option<Vec<DataType>> {
         if row < self.data.len() {
             Some(self.data[row].clone())
@@ -317,7 +341,8 @@ impl DataFrame {
         }
     }
 
-    pub fn print(&self) -> () {
+    pub fn print(&self) {
+        println!("===============================================================");
         println!(
             "{0: <10} | {1: <10} | {2: <10} | {3: <10} | {4: <10}",
             &self.header[0]
