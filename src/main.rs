@@ -7,10 +7,16 @@ fn main() {
     // println!("{:?}", s);
     // println!("{:?}", statust::predict_type(s));
 
-    let args: Vec<String> = env::args().collect();
-    let fname = &args[1];
+    // let args: Vec<String> = env::args().collect();
+    // let fname = &args[1];
 
-    let df = statust::DataFrame::read(fname).unwrap();
-    df.print();
-    df.print_describe();
+    // let df = statust::DataFrame::read(fname).unwrap();
+    // df.print();
+    // df.print_describe();
+
+    // let writer = statust::FileWriter {
+    //     fname: "output.txt".to_string(),
+    //     data: statust::ResultType::DescribeMany(df.describe()),
+    // };
+    // writer.write_file();
 }
