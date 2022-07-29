@@ -59,6 +59,8 @@ impl DataFrame {
                             } else {
                                 bool_result.false_count += 1;
                             }
+                        } else {
+                            bool_result.null_count += 1;
                         }
                     }
                     result.insert(col.clone(), DescribeResult::Boolean(bool_result));

@@ -199,4 +199,62 @@ mod tests {
             })
         );
     }
+
+    #[test]
+    fn test_describe_mock() {
+        let fname = "./examples/MOCK_DATA.csv";
+        let df = super::DataFrame::read(fname).unwrap();
+        let describe_result = df.describe();
+        assert_eq!(describe_result.len(), 4);
+        assert_eq!(
+            describe_result["boolean_test"],
+            super::DescribeResult::Boolean(super::BooleanDescribeResult {
+                name: "boolean_test".to_string(),
+                dtype: super::DataType::Bool(false),
+                null_count: 6,
+                true_count: 77,
+                false_count: 67,
+            })
+        );
+        assert_eq!(
+            describe_result["int_test"],
+            super::DescribeResult::Numeric(super::NumericDescribeResult {
+                name: "int_test".to_string(),
+                dtype: super::DataType::Int(5),
+                null_count: 4,
+                mean: 5.0000,
+                std: 2.280,
+                min: 1.0,
+                max: 13.0,
+            })
+        );
+        assert_eq!(
+            describe_result["float_test"],
+            super::DescribeResult::Numeric(super::NumericDescribeResult {
+                name: "float_test".to_string(),
+                dtype: super::DataType::Float(1.22),
+                null_count: 9,
+                mean: 2.0527,
+                std: 1.0547,
+                min: -1.0,
+                max: 5.03,
+            })
+        );
+        assert_eq!(
+            describe_result["string_test"],
+            super::DescribeResult::Categorical(super::CategoricalDescribeResult {
+                name: "string_test".to_string(),
+                dtype: super::DataType::String("Setosa".to_string()),
+                null_count: 4,
+                most_freq_count: 49,
+                most_freq_value: "Setosa".to_string(),
+                unique_count: 3,
+                unique_values: vec![
+                    "Setosa".to_string(),
+                    "Versicolor".to_string(),
+                    "Virginica".to_string()
+                ],
+            })
+        );
+    }
 }
