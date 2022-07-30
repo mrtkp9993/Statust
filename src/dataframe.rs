@@ -1,16 +1,25 @@
 use crate::*;
 use std::collections::HashMap;
 
+use std::fmt::Write;
 use std::fs::File;
 use std::io;
 use std::io::{BufRead, BufReader};
 
+#[derive(Debug, Clone)]
 pub struct DataFrame {
     header: Vec<String>,
     data: Vec<Vec<DataType>>,
 }
 
 impl DataFrame {
+    pub fn new() -> DataFrame {
+        DataFrame {
+            header: Vec::new(),
+            data: Vec::new(),
+        }
+    }
+
     pub fn read(fname: &str) -> io::Result<DataFrame> {
         let mut header = Vec::new();
         let mut data = Vec::new();
@@ -173,9 +182,14 @@ impl DataFrame {
         }
     }
 
-    pub fn print(&self) {
-        println!("===============================================================");
-        println!(
+    pub fn print(&self) -> io::Result<String> {
+        let mut buffer = String::new();
+        writeln!(
+            buffer,
+            "==============================================================="
+        );
+        writeln!(
+            buffer,
             "{0: <10} | {1: <10} | {2: <10} | {3: <10} | {4: <10}",
             &self.header[0]
                 .chars()
@@ -204,7 +218,8 @@ impl DataFrame {
                 .collect::<String>()
         );
         for row in self.data.iter().take(5) {
-            println!(
+            writeln!(
+                buffer,
                 "{0: <10} | {1: <10} | {2: <10} | {3: <10} | {4: <10}",
                 &row[0]
                     .to_string()
@@ -238,5 +253,7 @@ impl DataFrame {
                     .collect::<String>()
             );
         }
+        println!("{}", buffer);
+        Ok(buffer)
     }
 }
