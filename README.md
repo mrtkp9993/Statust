@@ -1,3 +1,5 @@
+**NOTE: I'll continue development with different roadplan in different repository.**
+
 # Statust
 
 Statistical methods in Rust.
